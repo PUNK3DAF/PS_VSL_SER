@@ -23,6 +23,8 @@ public class PokreniServer extends Thread {
             while (true) {
                 Socket s = ss.accept();
                 System.out.println("KLIJENT SE POVEZAO");
+                ObradaKlijentskihZahteva okz = new ObradaKlijentskihZahteva(s);
+                okz.start();
             }
         } catch (IOException ex) {
             Logger.getLogger(PokreniServer.class.getName()).log(Level.SEVERE, null, ex);
