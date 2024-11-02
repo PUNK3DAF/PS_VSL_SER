@@ -5,7 +5,6 @@
 package controller;
 
 import java.util.List;
-import java.sql.Connection;
 import java.util.ArrayList;
 import model.Slovo;
 
@@ -18,6 +17,7 @@ public class Controller {
     private static Controller instance;
     private List<String> reci = new ArrayList<>();
     private List<Slovo> pokusanaSlova = new ArrayList<>();
+    private String odabranaRec;
 
     private Controller() {
         reci.add("PETAR");
@@ -31,6 +31,14 @@ public class Controller {
             instance = new Controller();
         }
         return instance;
+    }
+
+    public String getOdabranaRec() {
+        return odabranaRec;
+    }
+
+    public void setOdabranaRec(String odabranaRec) {
+        this.odabranaRec = odabranaRec;
     }
 
     public List<String> getReci() {

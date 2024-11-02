@@ -4,6 +4,7 @@
  */
 package nitii;
 
+import controller.Controller;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -32,6 +33,10 @@ public class ObradaKlijentskihZahteva extends Thread {
             ServerskiOdgovor so = new ServerskiOdgovor();
             KlijentskiZahtev kz = primiZahtev();
             switch (kz.getOperacija()) {
+                case Operacije.POKRENI_IGRU -> {
+                    String rec = Controller.getInstance().getOdabranaRec();
+                    so.setOdgovor(rec);
+                }
                 case Operacije.POGODI_SLOVO ->
                     so.setOdgovor("USPEH");
                 default ->

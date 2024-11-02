@@ -5,6 +5,11 @@
 package forme;
 
 import controller.Controller;
+import nitii.ObradaKlijentskihZahteva;
+import nitii.PokreniServer;
+import operacija.Operacije;
+import transfer.KlijentskiZahtev;
+import transfer.ServerskiOdgovor;
 
 /**
  *
@@ -116,6 +121,7 @@ public class ServerskaForma extends javax.swing.JFrame {
 
     private void jButtonPokreniIgruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPokreniIgruActionPerformed
         String odabranaRec = (String) jComboBoxReci.getSelectedItem();
+        Controller.getInstance().setOdabranaRec(odabranaRec);
         jTextFieldSlovo1.setText(String.valueOf(odabranaRec.charAt(0)));
         jTextFieldSlovo2.setText(String.valueOf(odabranaRec.charAt(1)));
         jTextFieldSlovo3.setText(String.valueOf(odabranaRec.charAt(2)));
@@ -174,9 +180,12 @@ public class ServerskaForma extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void pokreni() {
+        PokreniServer ps = new PokreniServer();
+        ps.start();
         for (String rec : Controller.getInstance().getReci()) {
             jComboBoxReci.addItem(rec);
         }
+
         jTextFieldSlovo1.setEditable(false);
         jTextFieldSlovo2.setEditable(false);
         jTextFieldSlovo3.setEditable(false);
