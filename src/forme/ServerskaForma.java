@@ -5,6 +5,7 @@
 package forme;
 
 import controller.Controller;
+import model.Slovo;
 import nitii.ObradaKlijentskihZahteva;
 import nitii.PokreniServer;
 import operacija.Operacije;
@@ -22,6 +23,7 @@ public class ServerskaForma extends javax.swing.JFrame {
      */
     public ServerskaForma() {
         initComponents();
+        Controller.getInstance().setSf(this);
         pokreni();
     }
 
@@ -122,6 +124,7 @@ public class ServerskaForma extends javax.swing.JFrame {
     private void jButtonPokreniIgruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPokreniIgruActionPerformed
         String odabranaRec = (String) jComboBoxReci.getSelectedItem();
         Controller.getInstance().setOdabranaRec(odabranaRec);
+        Controller.getInstance().setPokrenuto(true);
         jTextFieldSlovo1.setText(String.valueOf(odabranaRec.charAt(0)));
         jTextFieldSlovo2.setText(String.valueOf(odabranaRec.charAt(1)));
         jTextFieldSlovo3.setText(String.valueOf(odabranaRec.charAt(2)));
@@ -194,5 +197,31 @@ public class ServerskaForma extends javax.swing.JFrame {
 
         jLabelKorisnik1.setText("Prvi korisnik: broj pokusaja/broj pogodjenih (0/0)");
         jLabelKorisnik2.setText("Drugi korisnik: broj pokusaja/broj pogodjenih (0/0)");
+    }
+
+    public void pogodjeno(Slovo s) {
+        if (!Controller.getInstance().getPogodjenaSlova().contains(s)) {
+            char c = s.getKarakter();
+            int poz = s.getPozicija();
+            switch (poz) {
+                case 1:
+                    jTextFieldSlovo1.setText(String.valueOf(c));
+                    break;
+                case 2:
+                    jTextFieldSlovo2.setText(String.valueOf(c));
+                    break;
+                case 3:
+                    jTextFieldSlovo3.setText(String.valueOf(c));
+                    break;
+                case 4:
+                    jTextFieldSlovo4.setText(String.valueOf(c));
+                    break;
+                case 5:
+                    jTextFieldSlovo5.setText(String.valueOf(c));
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        }
     }
 }

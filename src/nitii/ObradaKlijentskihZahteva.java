@@ -9,8 +9,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Slovo;
 import operacija.Operacije;
 import transfer.KlijentskiZahtev;
 import transfer.ServerskiOdgovor;
@@ -34,11 +37,19 @@ public class ObradaKlijentskihZahteva extends Thread {
             KlijentskiZahtev kz = primiZahtev();
             switch (kz.getOperacija()) {
                 case Operacije.POKRENI_IGRU -> {
-                    String rec = Controller.getInstance().getOdabranaRec();
-                    so.setOdgovor(rec);
+                    so.setOdgovor(Controller.getInstance().isPokrenuto());
                 }
-                case Operacije.POGODI_SLOVO ->
-                    so.setOdgovor("USPEH");
+                case Operacije.POGODI_SLOVO -> {
+                    char slovo = (char) kz.getParam();
+                    System.out.println("Pre pogodi: " + Controller.getInstance().getBrPogodj());
+                    List<Slovo> slova = Controller.getInstance().pogodi(slovo);
+                    System.out.println("Posle pogodi: " + Controller.getInstance().getBrPogodj());
+                    if (Controller.getInstance().getBrPogodj() >= 5) {
+                        JOptionPane.showMessageDialog(null, "POBEDA", "POGODILI STE", JOptionPane.INFORMATION_MESSAGE);
+                    }
+
+                    so.setOdgovor(slova);
+                }
                 default ->
                     throw new AssertionError();
             }

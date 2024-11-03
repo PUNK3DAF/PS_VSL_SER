@@ -4,6 +4,7 @@
  */
 package controller;
 
+import forme.ServerskaForma;
 import java.util.List;
 import java.util.ArrayList;
 import model.Slovo;
@@ -16,8 +17,44 @@ public class Controller {
 
     private static Controller instance;
     private List<String> reci = new ArrayList<>();
-    private List<Slovo> pokusanaSlova = new ArrayList<>();
+    private List<Character> pokusanaSlova = new ArrayList<>();
+    private List<Slovo> pogodjenaSlova = new ArrayList<>();
     private String odabranaRec;
+    private int brPogodj = 0;
+    private ServerskaForma sf;
+    private boolean pokrenuto;
+
+    public boolean isPokrenuto() {
+        return pokrenuto;
+    }
+
+    public void setPokrenuto(boolean pokrenuto) {
+        this.pokrenuto = pokrenuto;
+    }
+
+    public ServerskaForma getSf() {
+        return sf;
+    }
+
+    public void setSf(ServerskaForma sf) {
+        this.sf = sf;
+    }
+
+    public List<Slovo> getPogodjenaSlova() {
+        return pogodjenaSlova;
+    }
+
+    public void setPogodjenaSlova(List<Slovo> pogodjenaSlova) {
+        this.pogodjenaSlova = pogodjenaSlova;
+    }
+
+    public int getBrPogodj() {
+        return brPogodj;
+    }
+
+    public void setBrPogodj(int brPogodj) {
+        this.brPogodj = brPogodj;
+    }
 
     private Controller() {
         reci.add("PETAR");
@@ -49,12 +86,29 @@ public class Controller {
         this.reci = reci;
     }
 
-    public List<Slovo> getPokusanaSlova() {
+    public List<Character> getPokusanaSlova() {
         return pokusanaSlova;
     }
 
-    public void setPokusanaSlova(List<Slovo> pokusanaSlova) {
+    public void setPokusanaSlova(List<Character> pokusanaSlova) {
         this.pokusanaSlova = pokusanaSlova;
+    }
+
+    public List<Slovo> pogodi(char slovo) {
+
+        Slovo s;
+
+        for (int i = 0; i <= 4; i++) {
+            if (odabranaRec.charAt(i) == slovo) {
+                brPogodj++;
+                s = new Slovo();
+                s.setKarakter(slovo);
+                s.setPozicija(i + 1);
+                pogodjenaSlova.add(s);
+                sf.pogodjeno(s);
+            }
+        }
+        return pogodjenaSlova;
     }
 
 }
